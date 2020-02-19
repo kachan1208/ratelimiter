@@ -1,7 +1,6 @@
 package ratelimiter
 
 import (
-	"fmt"
 	"sync"
 	"time"
 )
@@ -74,7 +73,6 @@ func (r *SemiLazyLimiter) runGCDeamon() {
 func (r *SemiLazyLimiter) clean() {
 	//lock Rmutex to read data from storage
 	r.mutex.RLock()
-	fmt.Println("Start", len(r.locks))
 	for key, lock := range r.locks {
 		//unlock Rmutex because reading ended
 		r.mutex.RUnlock()
@@ -89,6 +87,5 @@ func (r *SemiLazyLimiter) clean() {
 		r.mutex.RLock()
 	}
 
-	fmt.Println(len(r.locks))
 	r.mutex.RUnlock()
 }
